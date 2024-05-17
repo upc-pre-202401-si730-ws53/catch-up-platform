@@ -33,4 +33,29 @@ public class FavoriteSourcesController(
         var resource = FavoriteSourceResourceFromEntityAssembler.ToResourceFromEntity(result);
         return Ok(resource);
     }
+
+    private async Task<ActionResult> GetAllFavoriteSourcesByNewsApiKey(string newsApiKey)
+    {
+        var getAllFavoriteSourcesByNewsApiKeyQuery = new GetAllFavoriteSourcesByNewsApiKeyQuery(newsApiKey);
+        var result = await favoriteSourceQueryService.Handle(getAllFavoriteSourcesByNewsApiKeyQuery);
+        var resources = result.Select(FavoriteSourceResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+    
+    private async Task<ActionResult> GetFavoriteSourceByNewsApiKeyAndSourceId(string newsApiKey, string sourceId)
+    {
+        var getFavoriteSourceByNewsApiKeyAndSourceIdQuery = new GetFavoriteSourceByNewsApiKeyAndSourceIdQuery(newsApiKey, sourceId);
+        var result = await favoriteSourceQueryService.Handle(getFavoriteSourceByNewsApiKeyAndSourceIdQuery);
+        var resource = FavoriteSourceResourceFromEntityAssembler.ToResourceFromEntity(result);
+        return Ok(resource);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetFavoriteSourcesFromQuery([FromQuery] string newsApiKey,
+        [FromQuery] string sourceId = "")
+    {
+        return string.IsNullOrEmpty(sourceId)
+            ? await GetAllFavoriteSourcesByNewsApiKey(newsApiKey)
+            : await GetFavoriteSourceByNewsApiKeyAndSourceId(newsApiKey, sourceId);
+    }
 }
