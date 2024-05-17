@@ -6,5 +6,5 @@ namespace CatchUpPlatform.API.News.Domain.Repositories;
 public interface IFavoriteSourceRepository : IBaseRepository<FavoriteSource>
 {
     Task<IEnumerable<FavoriteSource>> FindByNewsApiKeyAsync(string newsApiKey);
-    Task<FavoriteSource> FindByNewsApiKeyAndSourceIdAsync(string newsApiKey, string sourceId);
+    Task<FavoriteSource?> FindByNewsApiKeyAndSourceIdAsync(string newsApiKey, string sourceId);
 }
