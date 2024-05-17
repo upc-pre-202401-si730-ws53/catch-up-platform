@@ -16,8 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-      <Folder Include="Shared\Domain\Repositories\" />
       <Folder Include="Shared\Infrastructure\Persistence\EFC\Repositories\" />
     </ItemGroup>
 
